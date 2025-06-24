@@ -1,55 +1,129 @@
-# React + TypeScript + Vite
+# 🗂️ MongoDB CRUD Checkpoint – Contact List
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📚 Overview
 
-Currently, two official plugins are available:
+This checkpoint demonstrates the use of **MongoDB CRUD operations** by managing a simple contacts database. The task includes creating a database, inserting documents, and performing operations such as querying, updating, and deleting records.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ✅ Instructions & Tasks
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 1. Create a database called `contact`
+```js
+use contact
+````
+
+### 2. Create a collection called `contactlist`
 
 ```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
+db.createCollection("contactlist")
+```
+
+### 3. Insert the following documents into `contactlist`
+
+```js
+db.contactlist.insertMany([
+  { lastName: "Ben", firstName: "Moris", email: "ben@gmail.com", age: 26 },
+  { lastName: "Kefi", firstName: "Seif", email: "kefi@gmail.com", age: 15 },
+  { lastName: "Emilie", firstName: "brouge", email: "emilie.b@gmail.com", age: 40 },
+  { lastName: "Alex", firstName: "brown", age: 4 },
+  { lastName: "Denzel", firstName: "Washington", age: 3 }
+])
+```
+
+---
+
+## 🔎 CRUD Operations Performed
+
+### ✅ Display all of the contacts
+
+```js
+db.contactlist.find().pretty()
+```
+
+📷 *\[Insert Screenshot]*
+
+---
+
+### ✅ Display all the information about only one person using their ID
+
+```js
+db.contactlist.find({ _id: ObjectId("INSERT_ID_HERE") })
+```
+
+📷 *\[Insert Screenshot]*
+
+---
+
+### ✅ Display all the contacts with age > 18
+
+```js
+db.contactlist.find({ age: { $gt: 18 } })
+```
+
+📷 *\[Insert Screenshot]*
+
+---
+
+### ✅ Display all contacts with age > 18 and name containing "ah"
+
+```js
+db.contactlist.find({
+  age: { $gt: 18 },
+  firstName: { $regex: "ah", $options: "i" }
 })
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+📷 *\[Insert Screenshot]*
+
+---
+
+### ✅ Change contact's first name from "Kefi Seif" to "Kefi Anis"
 
 ```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+db.contactlist.updateOne(
+  { lastName: "Kefi", firstName: "Seif" },
+  { $set: { firstName: "Anis" } }
+)
 ```
-# gomycode-mongodb-project
+
+📷 *\[Insert Screenshot]*
+
+---
+
+### ✅ Delete contacts aged under 5
+
+```js
+db.contactlist.deleteMany({ age: { $lt: 5 } })
+```
+
+📷 *\[Insert Screenshot]*
+
+---
+
+### ✅ Display all contacts (Final List)
+
+```js
+db.contactlist.find().pretty()
+```
+
+📷 *\[Insert Screenshot]*
+
+---
+
+## 📌 Notes
+
+* All operations were performed in MongoDB Playground or Shell.
+* Each step is accompanied by a screenshot showing successful execution.
+* This checkpoint demonstrates mastery of basic MongoDB CRUD operations.
+
+---
+
+## 📝 Author
+
+**Grace Mugeche**
+MongoDB Checkpoint – GOMYCODE
+June 2025
+
+```
+
